@@ -1,0 +1,25 @@
+<template>
+    <div class="container">
+        <h2>Select Cities</h2>
+        
+        <!-- Dropdown for City Selection -->
+        <lightning-combobox 
+            name="city"
+            label="Select a City"
+            value={selectedCity}
+            placeholder="Select a city"
+            options={cityOptions}
+            onchange={handleCityChange}>
+        </lightning-combobox>
+
+        <!-- Pills for Selected Cities -->
+        <div class="pills-container">
+            <template for:each={selectedCities} for:item="city">
+                <span key={city} class="pill">
+                    {city}
+                    <button class="remove-btn" onclick={removeCity} data-city={city}>&times;</button>
+                </span>
+            </template>
+        </div>
+    </div>
+</template>
