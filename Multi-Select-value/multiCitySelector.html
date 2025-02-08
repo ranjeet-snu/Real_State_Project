@@ -1,25 +1,74 @@
 <template>
     <div class="container">
-        <h2>Select Cities</h2>
-        
-        <!-- Dropdown for City Selection -->
+        <h2>Property Filter</h2>
+
+        <!-- City Selection -->
         <lightning-combobox 
             name="city"
-            label="Select a City"
+            label="Select Cities"
             value={selectedCity}
             placeholder="Select a city"
             options={cityOptions}
             onchange={handleCityChange}>
         </lightning-combobox>
 
-        <!-- Pills for Selected Cities -->
         <div class="pills-container">
             <template for:each={selectedCities} for:item="city">
                 <span key={city} class="pill">
-                    {city}
-                    <button class="remove-btn" onclick={removeCity} data-city={city}>&times;</button>
+                    {city} 
+                    <button class="remove-btn" onclick={removeCity} data-value={city}>&times;</button>
                 </span>
             </template>
         </div>
+
+        <!-- Property Type Selection -->
+        <lightning-combobox 
+            name="propertyType"
+            label="Select Property Type"
+            value={selectedPropertyType}
+            placeholder="Select a type"
+            options={propertyTypeOptions}
+            onchange={handlePropertyTypeChange}>
+        </lightning-combobox>
+
+        <div class="pills-container">
+            <template for:each={selectedPropertyTypes} for:item="type">
+                <span key={type} class="pill">
+                    {type} 
+                    <button class="remove-btn" onclick={removePropertyType} data-value={type}>&times;</button>
+                </span>
+            </template>
+        </div>
+
+        <!-- Buy/Rent Selection -->
+        <lightning-combobox 
+            name="buyRent"
+            label="Select Buy/Rent"
+            value={selectedBuyRent}
+            placeholder="Choose Buy or Rent"
+            options={buyRentOptions}
+            onchange={handleBuyRentChange}>
+        </lightning-combobox>
+
+        <div class="pills-container">
+            <template for:each={selectedBuyRent} for:item="option">
+                <span key={option} class="pill">
+                    {option} 
+                    <button class="remove-btn" onclick={removeBuyRent} data-value={option}>&times;</button>
+                </span>
+            </template>
+        </div>
+
+        <!-- Min and Max Value for Buying (Lakhs) -->
+        <template if:true={showBuyFields}>
+            <lightning-input type="number" name="minValue" label="Min Value (Lakhs)" value={minValue} onchange={handleMinValueChange} disabled={disableBuyFields}></lightning-input>
+            <lightning-input type="number" name="maxValue" label="Max Value (Lakhs)" value={maxValue} onchange={handleMaxValueChange} disabled={disableBuyFields}></lightning-input>
+        </template>
+
+        <!-- Min and Max Value for Renting (Thousands) -->
+        <template if:true={showRentFields}>
+            <lightning-input type="number" name="minRentValue" label="Min Rent (Thousands)" value={minRentValue} onchange={handleMinRentValueChange} disabled={disableRentFields}></lightning-input>
+            <lightning-input type="number" name="maxRentValue" label="Max Rent (Thousands)" value={maxRentValue} onchange={handleMaxRentValueChange} disabled={disableRentFields}></lightning-input>
+        </template>
     </div>
 </template>
