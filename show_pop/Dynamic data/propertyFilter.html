@@ -1,0 +1,95 @@
+<template>
+    <template if:true={showModal}>
+        <section class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal Header -->
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Property Filter</h2>
+                </header>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <!-- City Selection -->
+                    <lightning-combobox 
+                        name="city"
+                        label="Select Cities"
+                        value={selectedCity}
+                        placeholder="Select a city"
+                        options={cityOptions}
+                        onchange={handleCityChange}>
+                    </lightning-combobox>
+
+                    <div class="pills-container">
+                        <template for:each={selectedCities} for:item="city">
+                            <span key={city} class="pill">
+                                {city} 
+                                <button class="remove-btn" onclick={removeCity} data-value={city}>&times;</button>
+                            </span>
+                        </template>
+                    </div>
+
+                    <!-- Property Type Selection -->
+                    <lightning-combobox 
+                        name="propertyType"
+                        label="Select Property Type"
+                        value={selectedPropertyType}
+                        placeholder="Select a type"
+                        options={propertyTypeOptions}
+                        onchange={handlePropertyTypeChange}>
+                    </lightning-combobox>
+
+                    <div class="pills-container">
+                        <template for:each={selectedPropertyTypes} for:item="type">
+                            <span key={type} class="pill">
+                                {type} 
+                                <button class="remove-btn" onclick={removePropertyType} data-value={type}>&times;</button>
+                            </span>
+                        </template>
+                    </div>
+
+                    <!-- Buy/Rent Selection -->
+                    <lightning-combobox 
+                        name="buyRent"
+                        label="Select Buy/Rent"
+                        value={selectedBuyRent}
+                        placeholder="Choose Buy or Rent"
+                        options={buyRentOptions}
+                        onchange={handleBuyRentChange}>
+                    </lightning-combobox>
+
+                    <div class="pills-container">
+                        <template for:each={selectedBuyRent} for:item="option">
+                            <span key={option} class="pill">
+                                {option} 
+                                <button class="remove-btn" onclick={removeBuyRent} data-value={option}>&times;</button>
+                            </span>
+                        </template>
+                    </div>
+
+                    <!-- Min and Max Value for Buying (Lakhs) -->
+                    <template if:true={showBuyFields}>
+                        <div class="input-container">
+                            <lightning-input type="number" name="minValue" label="Min Value (Lakhs)" value={minValue} onchange={handleMinValueChange}></lightning-input>
+                            <lightning-input type="number" name="maxValue" label="Max Value (Lakhs)" value={maxValue} onchange={handleMaxValueChange}></lightning-input>
+                        </div>
+                    </template>
+
+                    <!-- Min and Max Value for Renting (Thousands) -->
+                    <template if:true={showRentFields}>
+                        <div class="input-container">
+                            <lightning-input type="number" name="minRentValue" label="Min Rent (Thousands)" value={minRentValue} onchange={handleMinRentValueChange}></lightning-input>
+                            <lightning-input type="number" name="maxRentValue" label="Max Rent (Thousands)" value={maxRentValue} onchange={handleMaxRentValueChange}></lightning-input>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand submit-btn" onclick={handleSubmit}>Submit</button>
+                </footer>
+            </div>
+        </section>
+
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
